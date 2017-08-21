@@ -127,12 +127,9 @@ to {
 								data-toggle="tab">Editar</a></li>
 							<li role="presentation"><a href="#import" role="tab"
 								data-toggle="tab">Importar JSON</a></li>
+							<li role="presentation"><a href="#sql" role="tab"
+								data-toggle="tab">SQL</a></li>
 						</ul>
-						<script>
-							var tab = "${param.tab}";
-							console.log(tab);
-							$('.nav-tabs a[href="#' + tab + '"]').tab('show');
-						</script>
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active" id="create">
 								<div class="panel-body">
@@ -193,7 +190,7 @@ to {
 
 											<div class="form-group">
 												<label class="control-label col-sm-2"
-													for="editCensuredWord${i }">${i}.</label>
+													for="editCensuredWord${i }">${i + 1}.</label>
 												<div class="col-sm-10">
 													<input type="text" class="form-control"
 														id="editCensuredWord${i}" name="editCensuredWord${i}"
@@ -233,7 +230,48 @@ to {
 									</form>
 								</div>
 							</div>
+							<div role="tabpanel" class="tab-pane" id="sql">
+								<form class="form-horizontal" method="POST"
+									action="./Controller">
+									<div class="form-group">
+										<input type="hidden" name="cmd" value="sqlStatement">
+										<label for="sqlTxt">SQL</label>
+										<textarea class="form-control" id="sqlTxt" name="sqlTxt"></textarea>
+									</div>
+									<button type="submit" class="btn btn-primary btn-block">
+										<span class="glyphicon glyphicon-tasks"></span> Commit SQL
+									</button>
+								</form>
+								<div>
+								<div class="col-sm-6">
+									<form action="./Controller" method="POST">
+										<input type="hidden" name="cmd" value="sqlCreateTable">
+										<button type="submit" id="sqlCreateTable"
+											class="btn btn-warning btn-block">
+											<span class="glyphicon glyphicon-list-alt"></span> Create
+											Table
+										</button>
+									</form>
+								</div>
+								<div class="col-sm-6">
+									<form action="./Controller" method="POST">
+										<input type="hidden" name="cmd" value="sqlDropTable">
+										<button type="submit" id="sqlDropTable"
+											class="btn btn-danger btn-block">
+											<span class="glyphicon glyphicon glyphicon-remove-sign"></span>
+											Drop Table
+										</button>
+									</form>
+								</div>
+								</div>
+								${param.sqlMsg }
+							</div>
 						</div>
+						<script>
+							var tab = "${param.tab}";
+							console.log(tab);
+							$('.nav-tabs a[href="#' + tab + '"]').tab('show');
+						</script>
 					</div>
 				</div>
 				<div class="col-sm-6">
