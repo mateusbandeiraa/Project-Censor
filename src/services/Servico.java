@@ -1,6 +1,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,6 +22,7 @@ public class Servico {
 	@Path("getCards")
 	@Produces("application/json")
 	public String getCards() {
+		System.out.println(new Date() + ": getCards()");
 		String output = null;
 		try {
 			ArrayList<Card> cards = new CardDao().selectAll();
@@ -35,6 +37,7 @@ public class Servico {
 	@Path("getCard/{id}")
 	@Produces("application/json")
 	public String getCard(@PathParam("id") String id) {
+		System.out.println(new Date() + ": getCard() & ID = " + id);
 		String output = null;
 		try {
 			Card c = new CardDao().select(Integer.decode(id));

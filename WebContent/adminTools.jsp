@@ -15,6 +15,10 @@
 	src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script type="text/javascript" src="./js/jquery.quickfit.js"></script>
 <script type="text/javascript" src="./js/scripts.js"></script>
+<script src="./js/bootstrap-toggle.js"></script>
+<link
+	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+	rel="stylesheet">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <title>CARDS ADMIN TOOLS</title>
 
@@ -31,7 +35,7 @@
 	float: left;
 }
 
-.card-panel-heading{
+.card-panel-heading {
 	height: 54px;
 }
 
@@ -42,12 +46,12 @@
 	white-space: inherit;
 }
 
-.card-label p{
+.card-label p {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	text-align: center; 
+	text-align: center;
 }
 
 .card-title {
@@ -69,12 +73,41 @@
 	white-space: nowrap;
 }
 
-.btn-apagar{
+.btn-apagar {
 	float: right;
 }
-.btn-editar{
+
+.btn-editar {
 	float: right;
 	margin-right: 5px;
+}
+
+.hovered-icon {
+	animation-name: rotate;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@
+keyframes rotate {
+	from {transform: rotate(0deg);
+}
+
+to {
+	transform: rotate(360deg);
+}
+
+}
+#jsonOutput {
+	width: 100%;
+	height: 365px;
+	resize: none;
+}
+
+.json-toggle {
+	width: 200px;
+	padding: 0;
 }
 </style>
 </head>
@@ -90,16 +123,22 @@
 						<ul class="nav nav-tabs" role="tablist" id="mainTabs">
 							<li role="presentation" class="active"><a href="#create"
 								role="tab" data-toggle="tab">Criar cards</a></li>
-								<li role="presentation"><a href="#edit" role="tab"
+							<li role="presentation"><a href="#edit" role="tab"
 								data-toggle="tab">Editar</a></li>
 							<li role="presentation"><a href="#import" role="tab"
 								data-toggle="tab">Importar JSON</a></li>
 						</ul>
+						<script>
+							var tab = "${param.tab}";
+							console.log(tab);
+							$('.nav-tabs a[href="#' + tab + '"]').tab('show');
+						</script>
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active" id="create">
 								<div class="panel-body">
-									<form class="form-horizontal" method="POST" action="./Controller">
-									<input type="hidden" name="cmd" id="cmd" value="gravar">
+									<form class="form-horizontal" method="POST"
+										action="./Controller">
+										<input type="hidden" name="cmd" id="cmd" value="gravar">
 										<div class="form-group">
 											<label class="control-label col-sm-2" for="cardWord">Palavra</label>
 											<div class="col-sm-10">
@@ -130,63 +169,86 @@
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="edit">
-							<form class="form-horizontal" method="POST" action="./Controller" style="margin-top: 7px;">
+								<form class="form-horizontal" method="POST"
+									action="./Controller" style="margin-top: 7px;">
 									<input type="hidden" name="cmd" id="cmd" value="editar">
-										<div class="form-group">
-											<label class="control-label col-sm-2" for="editCardId">ID</label>
-											<div class="col-sm-10">
-												<input type="number" class="form-control" id="editCardId"
-													name="editCardId" required readonly="readonly">
-											</div>
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="editCardId">ID</label>
+										<div class="col-sm-10">
+											<input type="number" class="form-control" id="editCardId"
+												name="editCardId" required readonly="readonly">
 										</div>
-										<div class="form-group">
-											<label class="control-label col-sm-2" for="editCardWord">Palavra</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="editCardWord"
-													name="editCardWord" required>
-											</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="editCardWord">Palavra</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="editCardWord"
+												name="editCardWord" required>
 										</div>
+									</div>
 
-										<label class="control-label">Palavas censuradas:</label>
-										<div class="panel-body">
-											<c:forEach var="i" begin="0" end="4">
+									<label class="control-label">Palavas censuradas:</label>
+									<div class="panel-body">
+										<c:forEach var="i" begin="0" end="4">
 
-												<div class="form-group">
-													<label class="control-label col-sm-2"
-														for="editCensuredWord${i }">${i}.</label>
-													<div class="col-sm-10">
-														<input type="text" class="form-control"
-															id="editCensuredWord${i}" name="editCensuredWord${i}" required>
-													</div>
+											<div class="form-group">
+												<label class="control-label col-sm-2"
+													for="editCensuredWord${i }">${i}.</label>
+												<div class="col-sm-10">
+													<input type="text" class="form-control"
+														id="editCensuredWord${i}" name="editCensuredWord${i}"
+														required>
 												</div>
-											</c:forEach>
-										</div>
-										<button type="submit" class="btn btn-warning btn-block">
-											<span class="glyphicon glyphicon-floppy-disk"></span> Salvar edições
-										</button>
-									</form>
-									${param.editMsg }
+											</div>
+										</c:forEach>
+									</div>
+									<button type="submit" class="btn btn-warning btn-block">
+										<span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+										edições
+									</button>
+								</form>
+								${param.editMsg }
 							</div>
 							<div role="tabpanel" class="tab-pane" id="import">
 								<div class="panel-body">
-									<form class="form-horizontal" method="POST">
+									<form class="form-horizontal" method="POST"
+										action="./Controller">
+										<input type="hidden" name="cmd" value="importarJson">
 										<div class="form-group">
 											<label for="jsonTxt">JSON</label>
-											<textarea class="form-control" id="jsonTxt" name="jsonTxt" style="height:311px" required="required"></textarea>
+											<textarea class="form-control" id="jsonTxt" name="jsonTxt"
+												style="height: 311px" required="required"></textarea>
 										</div>
-										<button type="submit" class="btn btn-primary btn-block">
-											<span class="glyphicon glyphicon-cloud-upload"></span>
-											Importar
-										</button>
+										<div class="col-sm-4">
+											<input type="checkbox" data-toggle="toggle" data-width="100%"
+												data-on="Sobrescrever" data-off="Incrementar"
+												class="json-toggle" id="jsonOverwrite" name="jsonOverwrite">
+										</div>
+										<div class="col-sm-8">
+											<button type="submit" class="btn btn-primary btn-block">
+												<span class="glyphicon glyphicon-cloud-upload"></span>
+												Importar
+											</button>
+										</div>
 									</form>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					
-					<textarea id="jsonOutput" readonly="readonly" style="width:100%></textarea>
+				<div class="col-sm-6">
+					<ul class="nav nav-tabs" role="tablist" id="secondTabs">
+						<li role="presentation" class="active"><a href="#jsonExport"
+							role="tab" data-toggle="tab">Exportar JSON</a></li>
+					</ul>
+					<div role="tabpanel" class="tab-pane active" id="jsonExport">
+						<textarea id="jsonOutput" readonly="readonly"></textarea>
+						<button type="button" class="btn btn-primary btn-block"
+							id="refreshJsonButton">
+							<span class="glyphicon glyphicon-refresh" id="refresh-icon"></span>
+							Atualizar JSON
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

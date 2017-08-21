@@ -10,7 +10,7 @@ function getCards(){
 function updateJsonOutput(){
 	$.ajax({url:"./ws/card/getCards", success:function(cards){
 		$("#jsonOutput").val(cards);
-	}, dataType:"text" });
+	}, dataType:"text", async:false });
 }
 
 function renderCards(){
@@ -55,8 +55,12 @@ function HTMLCard(card){
 	
 	return output
 }
-$(document).ready(function(){
+$(document).ready(function(){	
 	$("#cards").on('click',".btn-apagar",function(e){
+		console.log("aaa");
+		if(!confirm("Deseja apagar este card?")){
+			return;
+		}
 		var cardId = $(this).attr("cardId"); 
 		$.ajax({url:"./Controller", type:"POST", data:{cmd:"apagar", cardId:cardId}, success: function(data){
 		}, async:false});
@@ -64,6 +68,7 @@ $(document).ready(function(){
 	});
 	
 	$("#cards").on('click',".btn-editar",function(e){
+		console.log("bbb");
 		var cardId = $(this).attr("cardId"); 
 		
 		var output;
@@ -78,5 +83,11 @@ $(document).ready(function(){
 		
 		$('#mainTabs a[href="#edit"]').tab('show');
 		
-	});	
+	});
+	
+	$("#refreshJsonButton").click(function(){
+		$("#refresh-icon").addClass("hovered-icon");
+		updateJsonOutput();
+		$("#refresh-icon").removeClass("hovered-icon");
+	});
 });

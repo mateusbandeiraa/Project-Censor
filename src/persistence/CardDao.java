@@ -45,7 +45,6 @@ public class CardDao extends Dao {
 			cards.add(c);
 		}
 		close();
-		System.out.println(cards);
 		return cards;
 	}
 
