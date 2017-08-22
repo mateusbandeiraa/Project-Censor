@@ -23,11 +23,12 @@
 <title>CARDS ADMIN TOOLS</title>
 
 <style>
+@media (min-width: 1200px){
 .container {
 	margin-top: 30px;
 	width: 1187px;
 }
-
+}
 .card-panel {
 	width: 215px;
 	display: inline-block;
