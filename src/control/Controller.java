@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -21,6 +22,8 @@ import persistence.CardDao;
 @WebServlet("/Controller")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final String ADMIN_USERNAME = "admin";
+	private final String ADMIN_PASSWORD = "password";
 	private String ref;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,6 +35,7 @@ public class Controller extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		ref = request.getHeader("referer");
 		ref = ref.split("\\?")[0];
+		System.out.println(ref);
 		String cmd = request.getParameter("cmd");
 		System.out.println(cmd);
 		switch (cmd) {
@@ -55,6 +59,12 @@ public class Controller extends HttpServlet {
 			break;
 		case "sqlDropTable":
 			sqlDropTable(request, response);
+			break;
+		case "login":
+			login(request, response);
+			break;
+		case "logout":
+			logout(request, response);
 			break;
 		}
 	}
@@ -116,7 +126,7 @@ public class Controller extends HttpServlet {
 		String msg;
 		try {
 			new CardDao().update(c);
-			msg = "Edi��o efetuada com sucesso!";
+			msg = "Edição efetuada com sucesso!";
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			msg = "Erro! " + ex.getLocalizedMessage();
@@ -180,6 +190,36 @@ public class Controller extends HttpServlet {
 		}
 		System.out.println(new Date() + ": sqlStatement() & Statement = " + sqlStatement);
 		response.sendRedirect(ref + "?tab=sql&sqlMsg=" + URLEncoder.encode(msg, "UTF-8"));
+	}
+	
+	protected void login(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String inputUsername = request.getParameter("username");
+		String inputPassword = request.getParameter("password");
+		
+		if(inputUsername.equals(ADMIN_USERNAME) && inputPassword.equals(ADMIN_PASSWORD)) 
+			session.setAttribute("userAuthorized", "true");
+		
+		System.out.println(new Date() + ": login()");
+		String redirect;
+		if(ref.contains("/index.jsp")) {
+		redirect = ref.split("/index.jsp")[0];
+		} else {
+			redirect = ref.substring(0, ref.lastIndexOf("/"));
+		}
+		redirect += "/adm/adminTools.jsp";
+		response.sendRedirect(redirect);
+	}
+	
+	protected void logout(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.setAttribute("userAuthorized", "false");
+		
+		System.out.println(new Date() + ": logout()");
+		String redirect = ref.split("/adm/adminTools.jsp")[0] + "/index.jsp";
+		response.sendRedirect(redirect);
 	}
 
 }

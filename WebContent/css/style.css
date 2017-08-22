@@ -1,0 +1,87 @@
+@media (min-width: 1200px){
+.container {
+	margin-top: 30px;
+	width: 1187px;
+}
+}
+.card-panel {
+	width: 215px;
+	display: inline-block;
+	margin-right: 10px;
+	float: left;
+}
+
+.card-panel-heading {
+	height: 54px;
+}
+
+.card-label {
+	position: relative;
+	display: block;
+	height: 33px;
+	white-space: inherit;
+}
+
+.card-label p {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+.card-title {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	display: block;
+	text-align: center;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.card-body {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.card-censuredWord {
+	margin: 5px;
+	white-space: nowrap;
+}
+
+.btn-apagar {
+	float: right;
+}
+
+.btn-editar {
+	float: right;
+	margin-right: 5px;
+}
+
+.hovered-icon {
+	animation-name: rotate;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@
+keyframes rotate {
+	from {transform: rotate(0deg);
+}
+
+to {
+	transform: rotate(360deg);
+}
+
+}
+#jsonOutput {
+	width: 100%;
+	height: 365px;
+	resize: none;
+}
+
+.json-toggle {
+	width: 200px;
+	padding: 0;
+}

@@ -1,6 +1,6 @@
 function getCards(){
 	var output;
-	$.ajax({url:"./ws/card/getCards", success:function(cards){
+	$.ajax({url:"../ws/card/getCards", success:function(cards){
 		output = cards;
 	}, async:false});
 	updateJsonOutput();
@@ -8,7 +8,7 @@ function getCards(){
 }
 
 function updateJsonOutput(){
-	$.ajax({url:"./ws/card/getCards", success:function(cards){
+	$.ajax({url:"../ws/card/getCards", success:function(cards){
 		$("#jsonOutput").val(cards);
 	}, dataType:"text", async:false });
 }
@@ -62,7 +62,7 @@ $(document).ready(function(){
 			return;
 		}
 		var cardId = $(this).attr("cardId"); 
-		$.ajax({url:"./Controller", type:"POST", data:{cmd:"apagar", cardId:cardId}, success: function(data){
+		$.ajax({url:"../Controller", type:"POST", data:{cmd:"apagar", cardId:cardId}, success: function(data){
 		}, async:false});
 		renderCards();
 	});
@@ -72,7 +72,7 @@ $(document).ready(function(){
 		var cardId = $(this).attr("cardId"); 
 		
 		var output;
-		$.ajax({url:"./ws/card/getCard/" + cardId, success:function(card){
+		$.ajax({url:"../ws/card/getCard/" + cardId, success:function(card){
 			output = card;
 		}, async:false});
 		$("#editCardId").val(output.cardId);
@@ -83,6 +83,11 @@ $(document).ready(function(){
 		
 		$('#mainTabs a[href="#edit"]').tab('show');
 		
+	});
+	
+	$("#btn-logout").click(function(){
+		$.ajax({url:"../Controller", type:"POST", data:{cmd:"logout"}, async:false});
+		window.location.replace("../");
 	});
 	
 	$("#refreshJsonButton").click(function(){
