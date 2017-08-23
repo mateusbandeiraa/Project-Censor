@@ -98,7 +98,7 @@ public class Controller extends HttpServlet {
 			for (Card c : cards)
 				cd.create(c);
 
-			msg = "Importa��o efetuada com sucesso!";
+			msg = "Importação efetuada com sucesso!";
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			msg = "Erro! " + ex.getLocalizedMessage();

@@ -10,7 +10,7 @@ public class CardDao extends Dao<Card> {
 	
 	public void dropTable() {
 		session = HibernateUtil.getSessionFactory().openSession();
-		session.createSQLQuery("DROP TABLE Card").executeUpdate();
+		session.createSQLQuery("DELETE FROM Card").executeUpdate();
 		session.close();
 	}
 
