@@ -25,7 +25,7 @@ public class Servico {
 		System.out.println(new Date() + ": getCards()");
 		String output = null;
 		try {
-			ArrayList<Card> cards = new CardDao().selectAll();
+			ArrayList<Card> cards = new ArrayList<>(new CardDao().selectAll());
 			output = gilson.toJson(cards);
 		} catch (Exception ex) {
 			ex.printStackTrace();

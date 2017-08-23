@@ -2,3 +2,7 @@ cards.lck
 cards.log
 cards.script
 /target/
+vars.env
+vars.env
+vars.env
+*.env
