@@ -95,8 +95,14 @@ public class Controller extends HttpServlet {
 			if (request.getParameterValues("jsonOverwrite") != null)
 				cd.dropTable();
 
-			for (Card c : cards)
-				cd.create(c);
+			for (Card c : cards) {
+				try {
+					cd.create(c);
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
+				
+			}
 
 			msg = "Importação efetuada com sucesso!";
 		} catch (Exception ex) {
