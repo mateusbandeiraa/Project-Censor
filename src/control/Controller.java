@@ -23,7 +23,7 @@ import persistence.CardDao;
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final String ADMIN_USERNAME = System.getenv("ADM_USER");
-	private final String ADMIN_PASSWORD = System.getenv("ADM_PASSWORD");
+	private final String ADMIN_PASSWORD = System.getenv("ADM_PASS");
 	private String ref;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -146,9 +146,6 @@ public class Controller extends HttpServlet {
 		
 		if(inputUsername.equals(ADMIN_USERNAME) && inputPassword.equals(ADMIN_PASSWORD)) 
 			session.setAttribute("userAuthorized", "true");
-		
-		System.out.println("USERNAME: " + ADMIN_USERNAME);
-		System.out.println("PASSWORD: " + ADMIN_PASSWORD);
 		
 		
 		System.out.println(new Date() + ": login()");
