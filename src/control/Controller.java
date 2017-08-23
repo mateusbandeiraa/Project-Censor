@@ -200,11 +200,6 @@ public class Controller extends HttpServlet {
 		String inputUsername = request.getParameter("username");
 		String inputPassword = request.getParameter("password");
 		
-		System.out.println(ADMIN_USERNAME);
-		System.out.println(ADMIN_PASSWORD);
-		
-		System.out.println(inputUsername);
-		System.out.println(inputPassword);
 		if(inputUsername.equals(ADMIN_USERNAME) && inputPassword.equals(ADMIN_PASSWORD)) 
 			session.setAttribute("userAuthorized", "true");
 		
