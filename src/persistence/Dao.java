@@ -12,7 +12,7 @@ public class Dao {
 
 	public void open() throws Exception {
 		Class.forName("org.hsqldb.jdbcDriver");
-		con = DriverManager.getConnection("jdbc:hsqldb:file:cards", "admin", "");
+		con = DriverManager.getConnection("jdbc:hsqldb:file:~cards", "admin", "");
 	}
 
 	public void close() throws Exception{
