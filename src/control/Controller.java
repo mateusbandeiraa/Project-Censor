@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
@@ -22,8 +24,8 @@ import persistence.CardDao;
 @WebServlet("/Controller")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final String ADMIN_USERNAME = "admin";
-	private final String ADMIN_PASSWORD = "password";
+	private final String ADMIN_USERNAME = System.getenv("ADM_USER");
+	private final String ADMIN_PASSWORD = System.getenv("ADM_PASS");
 	private String ref;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -198,6 +200,11 @@ public class Controller extends HttpServlet {
 		String inputUsername = request.getParameter("username");
 		String inputPassword = request.getParameter("password");
 		
+		System.out.println(ADMIN_USERNAME);
+		System.out.println(ADMIN_PASSWORD);
+		
+		System.out.println(inputUsername);
+		System.out.println(inputPassword);
 		if(inputUsername.equals(ADMIN_USERNAME) && inputPassword.equals(ADMIN_PASSWORD)) 
 			session.setAttribute("userAuthorized", "true");
 		
